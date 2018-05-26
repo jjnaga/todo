@@ -1,11 +1,13 @@
+// 5/26/18: Node currently does not support ES6. Babel required.
 import express from "express";
+import path from "path";
 
 // Create app
 const app = express();
 
 // Default entry point
 app.get("/", (req, res) => {
-	res.send("Hello World!");
+	res.sendFile(path.join(__dirname, "..", "index.html"));
 });
 
 // Listen to Port 4000
