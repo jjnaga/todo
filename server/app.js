@@ -5,9 +5,16 @@ import path from "path";
 // Create app
 const app = express();
 
+// Use dist (Where our finished product is)
+app.use(express.static(path.join(__dirname, "..", "dist/")));
+
 // Default entry point
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "..", "index.html"));
+});
+
+app.get("/bundle.js", (req, res) => {
+	res.sendFile("bundle.js");
 });
 
 // Listen to Port 4000
