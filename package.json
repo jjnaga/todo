@@ -11,6 +11,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"prop-types": "^15.6.1",
+		"rc-progress": "^2.2.5",
 		"react": "^16.4.0",
 		"react-dom": "^16.4.0"
 	},
