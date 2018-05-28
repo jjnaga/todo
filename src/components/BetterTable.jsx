@@ -12,9 +12,9 @@ const circleStyle = {
 };
 
 const textStyle = {
-	"text-align": "center",
-	"vertical-align": "middle",
-	"line-height": "0px",
+	textAlign: "center",
+	verticalAlign: "middle",
+	lineHeight: "0px",
 };
 
 const Table = ({ physical, mental, bliss }) => (

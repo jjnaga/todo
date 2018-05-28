@@ -1,8 +1,6 @@
 import React from "react";
-import Table from "./components/Table";
+// import Table from "./components/Table";
 import BetterTable from "./components/BetterTable";
-// import Todo from "./components/Todo"; TODO: Seperate Todo into seperate component
-// https://goo.gl/tstZN4
 
 class App extends React.Component {
 	constructor(props) {
@@ -22,10 +20,14 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch("/")
-			.then(res => res.json())
-			.then(data => this.setState({ data }));
-		console.log("I'm mounted");
+		fetch("/api")
+			.then(response => response.json())
+			.then(data => this.setState({ data }))
+			.catch(err => {
+				console.log(err, "oh hi mark");
+			});
+		console.log("I'm mounted!");
+		console.log(this.state.data);
 	}
 
 	handleSubmit(e) {
@@ -117,7 +119,6 @@ class App extends React.Component {
 					</select>
 					<input type="submit" onClick={e => this.handleSubmit(e)} />
 				</form>
-				<Table table={this.state.todos} />
 				<BetterTable
 					physical={this.state.physicalValue}
 					mental={this.state.mentalValue}

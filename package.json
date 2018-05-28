@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "webpack",
 		"execute": "node dist/bundle.js",
-		"start": "npm run build && npm run execute"
+		"start": "webpack-dev-server --open --mode development --port 3000"
 	},
 	"author": "",
 	"license": "ISC",
@@ -16,7 +16,9 @@
 		"react": "^16.4.0",
 		"react-dom": "^16.4.0"
 	},
+	"proxy": "localhost:4000/",
 	"devDependencies": {
+		"webpack-dev-server": "^3.1.4",
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.3",
 		"babel-loader": "^7.1.4",
