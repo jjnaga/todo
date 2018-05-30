@@ -1,4 +1,13 @@
+/**
+ *
+ * Category Descriptions:
+ * 0: Physical
+ * 1: Mental
+ * 2: Bliss
+ *
+ */
 import React from "react";
+import axios from "axios";
 // import Table from "./components/Table";
 import BetterTable from "./components/BetterTable";
 
@@ -8,7 +17,7 @@ class App extends React.Component {
 		this.state = {
 			todos: [],
 			value: "",
-			category: "physical",
+			category: 0,
 			weight: 5,
 			physicalValue: 0,
 			mentalValue: 0,
@@ -22,12 +31,28 @@ class App extends React.Component {
 	componentDidMount() {
 		fetch("/api")
 			.then(response => response.json())
-			.then(data => this.setState({ data }))
+			.then(data => {
+				this.setState({ data });
+				const data2 = Object.values(this.state.data);
+				data2.forEach(item => {
+					switch (item.category) {
+						case 0:
+							this.setState({ physicalValue: item.weight });
+							break;
+						case 1:
+							this.setState({ mentalValue: item.weight });
+							break;
+						case 2:
+							this.setState({ blissValue: item.weight });
+							break;
+						default:
+							break;
+					}
+				});
+			})
 			.catch(err => {
 				console.log(err, "oh hi mark");
 			});
-		console.log("I'm mounted!");
-		console.log(this.state.data);
 	}
 
 	handleSubmit(e) {
@@ -58,6 +83,18 @@ class App extends React.Component {
 					parseInt(this.state.weight, 10),
 			});
 		}
+		axios
+			.post("/api", {
+				value: this.state.value,
+				weight: this.state.weight,
+				category: this.state.category,
+			})
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.log(err);
+			});
 		this.setState({
 			value: "",
 			category: "physical",
@@ -81,13 +118,19 @@ class App extends React.Component {
 
 	handleCategoryChange(e) {
 		this.setState({
-			category: e.target.value,
+			category: parseInt(e.target.value, 10),
 		});
 	}
 
 	render() {
 		return (
 			<div>
+				<ul>
+					{Object.values(this.state.data).map(item => (
+						<li>{JSON.stringify(item)}</li>
+					))}
+				</ul>
+
 				<form onSubmit={e => this.handleSubmit(e)}>
 					<input
 						type="text"
@@ -113,9 +156,9 @@ class App extends React.Component {
 						id="dropdown"
 						onChange={e => this.handleCategoryChange(e)}
 					>
-						<option value="physical">Physical</option>
-						<option value="mental">Mental</option>
-						<option value="work">Work</option>
+						<option value="0">Physical</option>
+						<option value="1">Mental</option>
+						<option value="2">Work</option>
 					</select>
 					<input type="submit" onClick={e => this.handleSubmit(e)} />
 				</form>

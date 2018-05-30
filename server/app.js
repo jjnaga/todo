@@ -1,4 +1,6 @@
 // 5/26/18: Node currently does not support ES6. Babel required.
+// Used https://goo.gl/zgQtGV to learn all this.
+// https://goo.gl/oWXwto: Useful for learning fetch()
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
@@ -34,10 +36,15 @@ function handleError(res, reason, message, code) {
 	res.status(code || 500).json({ error: message });
 }
 
+// Default entry point
+app.get("/", (req, res) => {
+	res.sendFile(path.join(__dirname, "..", "index.html"));
+});
+
 /**
  * api/
- * 	GET: returns all data
- * 	POST: posts new data
+ * 	GET: returns all Todos
+ * 	POST: creates a new Todo
  */
 app.get("/api", (req, res) => {
 	db
@@ -52,29 +59,16 @@ app.get("/api", (req, res) => {
 		});
 });
 
-// app.listen(4000, () => {
-// 	console.log("Listenting on port 4000");
-// });
+app.post("/api", (req, res) => {
+	console.log("POSTING TO /API");
+	const newTodo = req.body;
+	newTodo.createDate = new Date();
 
-// Default entry point
-app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "index.html"));
+	db.collection("quotes").insertOne(newTodo, (err, doc) => {
+		if (err) {
+			handleError(res, err.message, "Failed to create Todo");
+		} else {
+			res.status(201).json(doc.ops[0]);
+		}
+	});
 });
-
-// app.get("/api", (req, res) => {
-// 	console.log("Oh HI API");
-// 	const data = db
-// 		.collection("users")
-// 		.find()
-// 		.toArray();
-// 	console.log(data);
-// 	// .then(data => {
-// 	// 	console.log(data);
-// 	// 	console.log("dta sent");
-// 	// 	res.json(data);
-// 	// });
-// 	console.log("OH BYE API");
-// 	res.end();
-// });
-
-// // Listen to Port 4000
