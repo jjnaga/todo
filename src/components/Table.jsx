@@ -6,42 +6,39 @@ import { Circle } from "rc-progress";
 
 // TODO: This is some smart shit on how to use CSS to get elements to fit:
 // https://goo.gl/de7PFd
-const parent = {};
-const circleStyle = {
-	height: "200px",
-};
-
-const textStyle = {
+const parent = {
+	background: "gray",
+	height: "auto",
+	overflow: "hidden",
 	textAlign: "center",
-	verticalAlign: "middle",
-	lineHeight: "0px",
 };
 
-const Table = ({ physical, mental, bliss }) => (
+const circleStyle = {
+	height: "300px",
+};
+
+const Table = ({ body, mind, spirit }) => (
 	// Red: #ff0045
 	// Green: #00c11a
 	<div style={parent}>
 		<Circle
 			style={circleStyle}
-			percent={physical * 10}
+			percent={body * 10}
 			strokeWidth="2"
-			strokeColor={physical * 10 < 100 ? "#ff0045" : "#00c11a"}
+			strokeColor={body * 10 < 100 ? "#ff0045" : "#00c11a"}
 		/>
-		<p style={textStyle}>Physical</p>
 		<Circle
 			style={circleStyle}
-			percent={mental * 10}
+			percent={mind * 10}
 			strokeWidth="2"
-			strokeColor={mental * 10 < 100 ? "#ff0045" : "#00c11a"}
+			strokeColor={mind * 10 < 100 ? "#ff0045" : "#00c11a"}
 		/>
-		<p style={textStyle}>Mental</p>
 		<Circle
 			style={circleStyle}
-			percent={bliss * 10}
+			percent={spirit * 10}
 			strokeWidth="2"
-			strokeColor={bliss * 10 < 100 ? "#ff0045" : "#00c11a"}
+			strokeColor={spirit * 10 < 100 ? "#ff0045" : "#00c11a"}
 		/>
-		<p style={textStyle}>Bliss</p>
 	</div>
 );
 
@@ -49,9 +46,9 @@ Table.propTypes = {
 	// For Objects, objectOf() is when properties are all the same type.
 	// shape is an object whos keys are known ahead of time, and represent
 	// diffrent types.
-	physical: Proptypes.number.isRequired,
-	mental: Proptypes.number.isRequired,
-	bliss: Proptypes.number.isRequired,
+	body: Proptypes.number.isRequired,
+	mind: Proptypes.number.isRequired,
+	spirit: Proptypes.number.isRequired,
 };
 
 export default Table;

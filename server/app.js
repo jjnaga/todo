@@ -46,7 +46,8 @@ app.get("/", (req, res) => {
  * 	GET: returns all Todos
  * 	POST: creates a new Todo
  */
-app.get("/api", (req, res) => {
+app.get("/api/today", (req, res) => {
+	// TODO: Get this to only return today's todos
 	db
 		.collection("quotes")
 		.find({})
