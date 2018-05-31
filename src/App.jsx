@@ -3,6 +3,7 @@ import axios from "axios";
 // Components
 import Table from "./components/Table";
 import Input from "./components/Input";
+import History from "./components/History";
 
 class App extends React.Component {
 	constructor(props) {
@@ -10,48 +11,50 @@ class App extends React.Component {
 		this.state = {
 			data: {},
 			body: 0,
-			mind: 0,
+			mind: 2,
 			spirit: 0,
 			bliss: 0,
+			isLoading: true,
 		};
-		this.handleNewTodo = this.handleNewTodo.bind(this);
-	}
-	componentDidMount() {
-		// TODO: I think, as of 1:34PM 5/30, the best option is to push this to
-		// our Input. If anything, the only thing we should have as state, is an
-		// array of the entire dataset. We can push that to Input.jsx, and
-		// History.jsx, and then they can work with the data.
-		//
-		// So it's going to be: App.jsx => fetch()
-		//                      Input.jsx => switch statement
+		console.log("test");
 		fetch("/api/today")
 			.then(response => response.json())
 			.then(data => {
-				this.setState({ data });
+				let abody = 0;
+				let amind = 0;
+				let aspirit = 0;
 				const data2 = Object.values(this.state.data);
-				data2.forEach(item => {
+				data.forEach(item => {
+					console.log("Looping...");
 					switch (item.category) {
 						case 0:
-							this.setState({ body: item.value });
+							abody += item.value;
 							break;
 						case 1:
-							this.setState({ mind: item.value });
+							amind += item.value;
 							break;
 						case 2:
-							this.setState({ spirit: item.value });
+							aspirit += item.value;
 							break;
 						default:
 							break;
 					}
 				});
+				this.setState({
+					data: data,
+					body: abody,
+					mind: amind,
+					spirit: aspirit,
+					isLoading: false,
+				});
 			})
 			.catch(err => {
-				console.log(err, "oh hi mark");
+				console.log(err);
 			});
+		this.handleNewTodo = this.handleNewTodo.bind(this);
 	}
 
 	handleNewTodo(category, value) {
-		console.log(`this is working ${category}, ${value}`);
 		switch (category) {
 			case 0:
 				this.setState({ body: value });
@@ -80,6 +83,12 @@ class App extends React.Component {
 					mind={this.state.mind}
 					spirit={this.state.spirit}
 				/>
+				{this.state.isLoading ? (
+					<p>Loading</p>
+				) : (
+					//TODO: We can do our today conditionals here.
+					<History data={this.state.data} />
+				)}
 			</div>
 		);
 	}

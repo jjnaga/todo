@@ -61,7 +61,7 @@ app.get("/api/today", (req, res) => {
 });
 
 app.post("/api", (req, res) => {
-	console.log("POSTING TO /API");
+	console.log("POSTING TO /API: ", req.body);
 	const newTodo = req.body;
 	newTodo.createDate = new Date();
 
