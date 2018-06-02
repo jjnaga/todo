@@ -22,6 +22,7 @@ class Input extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 	handleSubmit(e) {
+		e.preventDefault();
 		axios
 			.post("/api", {
 				todo: this.state.todo,
@@ -29,18 +30,16 @@ class Input extends React.Component {
 				value: parseInt(this.state.value),
 			})
 			.then(res => {
-				console.log(res);
+				this.props.onChange(res, this.state.value);
+				this.setState({
+					todo: "",
+					category: 0,
+					value: 5,
+				});
 			})
 			.catch(err => {
 				console.log(err);
 			});
-		this.props.onChange(this.state.category, this.state.value);
-		this.setState({
-			todo: "",
-			category: 0,
-			value: 5,
-		});
-		e.preventDefault();
 	}
 	handleChange(e) {
 		this.setState({
@@ -75,7 +74,7 @@ class Input extends React.Component {
 						value={this.state.value}
 						className="slider"
 						id="value"
-						onInput={e => this.handleValueChange(e)}
+						onChange={e => this.handleValueChange(e)}
 					/>
 					<select
 						id="dropdown"

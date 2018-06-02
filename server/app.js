@@ -61,9 +61,9 @@ app.get("/api/today", (req, res) => {
 });
 
 app.post("/api", (req, res) => {
-	console.log("POSTING TO /API: ", req.body);
+	console.log("app.js/API - Posting to API ", req.body);
 	const newTodo = req.body;
-	newTodo.createDate = new Date();
+	newTodo.createDate = new Date().toLocaleString();
 
 	db.collection("quotes").insertOne(newTodo, (err, doc) => {
 		if (err) {

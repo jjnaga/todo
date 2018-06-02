@@ -16,7 +16,6 @@ class App extends React.Component {
 			bliss: 0,
 			isLoading: true,
 		};
-		console.log("test");
 		fetch("/api/today")
 			.then(response => response.json())
 			.then(data => {
@@ -54,7 +53,8 @@ class App extends React.Component {
 		this.handleNewTodo = this.handleNewTodo.bind(this);
 	}
 
-	handleNewTodo(category, value) {
+	handleNewTodo(res) {
+		const { category, value } = res.data;
 		switch (category) {
 			case 0:
 				this.setState({ body: value });

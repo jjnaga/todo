@@ -18,31 +18,28 @@ const circleStyle = {
 };
 
 const Table = ({ body, mind, spirit }) => (
-	console.log("I'm Table!"),
-	(
-		// Red: #ff0045
-		// Green: #00c11a
-		<div style={parent}>
-			<Circle
-				style={circleStyle}
-				percent={body * 10}
-				strokeWidth="2"
-				strokeColor={body * 10 < 100 ? "#ff0045" : "#00c11a"}
-			/>
-			<Circle
-				style={circleStyle}
-				percent={mind * 10}
-				strokeWidth="2"
-				strokeColor={mind * 10 < 100 ? "#ff0045" : "#00c11a"}
-			/>
-			<Circle
-				style={circleStyle}
-				percent={spirit * 10}
-				strokeWidth="2"
-				strokeColor={spirit * 10 < 100 ? "#ff0045" : "#00c11a"}
-			/>
-		</div>
-	)
+	// Red: #ff0045
+	// Green: #00c11a
+	<div style={parent}>
+		<Circle
+			style={circleStyle}
+			percent={body * 10}
+			strokeWidth="2"
+			strokeColor={body * 10 < 100 ? "#ff0045" : "#00c11a"}
+		/>
+		<Circle
+			style={circleStyle}
+			percent={mind * 10}
+			strokeWidth="2"
+			strokeColor={mind * 10 < 100 ? "#ff0045" : "#00c11a"}
+		/>
+		<Circle
+			style={circleStyle}
+			percent={spirit * 10}
+			strokeWidth="2"
+			strokeColor={spirit * 10 < 100 ? "#ff0045" : "#00c11a"}
+		/>
+	</div>
 );
 
 Table.propTypes = {

@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"axios": "^0.18.0",
+		"bootstrap": "^3.3.7",
 		"prop-types": "^15.6.1",
 		"rc-progress": "^2.2.5",
 		"react": "^16.4.0",
