@@ -36,16 +36,35 @@ function handleError(res, reason, message, code) {
 	res.status(code || 500).json({ error: message });
 }
 
-// Default entry point
-app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "index.html"));
-});
+function checkAuth(req, res, next) {
+	if (req.session.user_id) {
+		res.send("You can't view this");
+	} else {
+		next();
+	}
+}
+
+/**
+ * login/
+ * 	GET: This is just the default login.
+ * 	POST: If credentials == OK, forward to /app
+ */
+// app.get("/", (req, res) => {
+// 	res.sendFile(path.join(__direname, "..", );
+// });
 
 /**
  * api/
  * 	GET: returns all Todos
  * 	POST: creates a new Todo
+ * a45e60c09def
  */
+
+// Default entry point
+app.get("/app", (req, res) => {
+	res.sendFile(path.join(__dirname, "..", "index.html"));
+});
+
 app.get("/api/today", (req, res) => {
 	// TODO: Get this to only return today's todos
 	db

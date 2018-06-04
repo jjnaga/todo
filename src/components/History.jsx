@@ -2,10 +2,10 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 const style = {
-	margin: "15px",
-	borderStyle: "ridge",
-	borderWidth: "5px",
-	borderColor: "red",
+	// margin: "15px",
+	// borderStyle: "ridge",
+	// borderWidth: "5px",
+	// borderColor: "red",
 };
 
 const History = input => {

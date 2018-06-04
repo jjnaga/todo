@@ -1,9 +1,11 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from "axios";
 // Components
 import Table from "./components/Table";
 import Input from "./components/Input";
 import History from "./components/History";
+import Login from "./components/Login";
 
 class App extends React.Component {
 	constructor(props) {
@@ -16,6 +18,9 @@ class App extends React.Component {
 			bliss: 0,
 			isLoading: true,
 		};
+	}
+
+	componentDidMount() {
 		fetch("/api/today")
 			.then(response => response.json())
 			.then(data => {
@@ -50,7 +55,6 @@ class App extends React.Component {
 			.catch(err => {
 				console.log(err);
 			});
-		this.handleNewTodo = this.handleNewTodo.bind(this);
 	}
 
 	handleNewTodo(res) {
@@ -70,14 +74,25 @@ class App extends React.Component {
 		}
 	}
 
+	handleSubmit(user) {
+		fetch(`/api/${user}`)
+			.then(response => response.json())
+			.catch(err => {
+				console.log(err);
+			});
+	}
+
 	render() {
 		return (
 			<div>
-				<Input
-					onChange={(category, value) =>
-						this.handleNewTodo(category, value)
-					}
-				/>
+				<div id="topbar">
+					<Login handleSubmit={user => this.handleSubmit(user)} />
+					<Input
+						onChange={(category, value) =>
+							this.handleNewTodo(category, value)
+						}
+					/>
+				</div>
 				<Table
 					body={this.state.body}
 					mind={this.state.mind}
