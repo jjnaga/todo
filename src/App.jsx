@@ -75,6 +75,7 @@ class App extends React.Component {
 	}
 
 	handleSubmit(user) {
+		console.log("Getting user: ", user);
 		fetch(`/api/${user}`)
 			.then(response => response.json())
 			.catch(err => {
