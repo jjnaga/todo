@@ -6,6 +6,7 @@ import Table from "./components/Table";
 import Input from "./components/Input";
 import History from "./components/History";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 class App extends React.Component {
 	constructor(props) {
@@ -88,6 +89,7 @@ class App extends React.Component {
 			<div>
 				<div id="topbar">
 					<Login handleSubmit={user => this.handleSubmit(user)} />
+					<Signup />
 					<Input
 						onChange={(category, value) =>
 							this.handleNewTodo(category, value)

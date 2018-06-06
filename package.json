@@ -20,7 +20,6 @@
 		"react-dom": "^16.4.0",
 		"react-router-dom": "^4.2.2"
 	},
-	"proxy": "localhost:4000/",
 	"devDependencies": {
 		"webpack-dev-server": "^3.1.4",
 		"babel-cli": "^6.26.0",

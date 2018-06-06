@@ -10,6 +10,7 @@ module.exports = {
 		contentBase: "./",
 		proxy: {
 			"/api": "http://localhost:4000",
+			"/user": "http://localhost:4000",
 		},
 	},
 	module: {

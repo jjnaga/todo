@@ -11,24 +11,27 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "..", "dist/")));
 
-const mLab = "mongodb://admin:pass@ds135540.mlab.com:35540/star-wars-quotes";
+const mLab = "mongodb://admin:password12@ds151180.mlab.com:51180/bliss";
 let db;
 
-mongodb.MongoClient.connect(mLab, (err, client) => {
-	if (err) {
-		console.log(err);
-		process.exit(1);
-	}
+mongodb.MongoClient.connect(
+	mLab,
+	(err, client) => {
+		if (err) {
+			console.log(err);
+			process.exit(1);
+		}
 
-	// Save database object from callback for reuse
-	db = client.db();
+		// Save database object from callback for reuse
+		db = client.db();
 
-	console.log("Database Connection Ready");
+		console.log("Database Connection Ready");
 
-	app.listen(4000, () => {
-		console.log("App now running on port 4000");
-	});
-});
+		app.listen(4000, () => {
+			console.log("App now running on port 4000");
+		});
+	},
+);
 
 // Error Handler
 function handleError(res, reason, message, code) {
@@ -36,22 +39,26 @@ function handleError(res, reason, message, code) {
 	res.status(code || 500).json({ error: message });
 }
 
-function checkAuth(req, res, next) {
-	if (req.session.user_id) {
-		res.send("You can't view this");
-	} else {
-		next();
-	}
-}
-
 /**
- * login/
+ * user/
  * 	GET: This is just the default login.
- * 	POST: If credentials == OK, forward to /app
+ * 	POST: Create new user
  */
-// app.get("/", (req, res) => {
-// 	res.sendFile(path.join(__direname, "..", );
-// });
+app.get("/user", (req, res) => {});
+
+app.post("/user", (req, res) => {
+	console.log("Creating New User: ", req.body);
+	const newTodo = req.body;
+	newTodo.createDate = new Date().toLocaleString();
+
+	db.collection("users").insertOne(newTodo, (err, doc) => {
+		if (err) {
+			handleError(res, err.message, "Failed to create Todo");
+		} else {
+			res.status(201).json(doc.ops[0]);
+		}
+	});
+});
 
 /**
  * api/
@@ -67,8 +74,7 @@ app.get("/app", (req, res) => {
 
 app.get("/api/today", (req, res) => {
 	// TODO: Get this to only return today's todos
-	db
-		.collection("quotes")
+	db.collection("data")
 		.find({})
 		.toArray((err, data) => {
 			if (err) {
@@ -84,7 +90,7 @@ app.post("/api", (req, res) => {
 	const newTodo = req.body;
 	newTodo.createDate = new Date().toLocaleString();
 
-	db.collection("quotes").insertOne(newTodo, (err, doc) => {
+	db.collection("data").insertOne(newTodo, (err, doc) => {
 		if (err) {
 			handleError(res, err.message, "Failed to create Todo");
 		} else {
