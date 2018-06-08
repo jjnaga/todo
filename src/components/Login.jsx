@@ -1,4 +1,5 @@
 import React from "react";
+import Proptypes from "prop-types";
 
 const style = {
 	float: "right",
@@ -9,7 +10,8 @@ class Login extends React.Component {
 		super(props);
 		this.state = {
 			user: "",
-			pass: "",
+			// For now, just username
+			// pass: "",
 		};
 		this.handleUserChange = this.handleUserChange.bind(this);
 		this.handlePassChange = this.handlePassChange.bind(this);
@@ -22,7 +24,7 @@ class Login extends React.Component {
 	handlePassChange(e) {
 		this.setState({ pass: e.target.value });
 	}
-	handleSubmit(e, user) {
+	handleSubmit(e) {
 		e.preventDefault();
 		this.props.handleSubmit(this.state.user);
 	}
@@ -50,5 +52,10 @@ class Login extends React.Component {
 		);
 	}
 }
+
+// eslint-disable-next-line react/no-typos
+Login.Proptypes = {
+	handleSubmit: Proptypes.func.isRequired,
+};
 
 export default Login;

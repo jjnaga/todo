@@ -1,6 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from "axios";
+import uuid from "uuid";
 // Components
 import Table from "./components/Table";
 import Input from "./components/Input";
@@ -17,45 +17,47 @@ class App extends React.Component {
 			mind: 2,
 			spirit: 0,
 			bliss: 0,
-			isLoading: true,
+			hasData: false,
+			username: "",
 		};
 	}
 
 	componentDidMount() {
-		fetch("/api/today")
-			.then(response => response.json())
-			.then(data => {
-				let abody = 0;
-				let amind = 0;
-				let aspirit = 0;
-				const data2 = Object.values(this.state.data);
-				data.forEach(item => {
-					console.log("Looping...");
-					switch (item.category) {
-						case 0:
-							abody += item.value;
-							break;
-						case 1:
-							amind += item.value;
-							break;
-						case 2:
-							aspirit += item.value;
-							break;
-						default:
-							break;
-					}
-				});
-				this.setState({
-					data: data,
-					body: abody,
-					mind: amind,
-					spirit: aspirit,
-					isLoading: false,
-				});
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		// TODO: I think we need to fix.
+		// fetch("/api/today")
+		// 	.then(response => response.json())
+		// 	.then(data => {
+		// 		let abody = 0;
+		// 		let amind = 0;
+		// 		let aspirit = 0;
+		// 		const data2 = Object.values(this.state.data);
+		// 		data.forEach(item => {
+		// 			console.log("Looping...");
+		// 			switch (item.category) {
+		// 				case 0:
+		// 					abody += item.value;
+		// 					break;
+		// 				case 1:
+		// 					amind += item.value;
+		// 					break;
+		// 				case 2:
+		// 					aspirit += item.value;
+		// 					break;
+		// 				default:
+		// 					break;
+		// 			}
+		// 		});
+		// 		this.setState({
+		// 			data: data,
+		// 			body: abody,
+		// 			mind: amind,
+		// 			spirit: aspirit,
+		// 			isLoading: false,
+		// 		});
+		// 	})
+		// 	.catch(err => {
+		// 		console.log(err);
+		// 	});
 	}
 
 	handleNewTodo(res) {
@@ -75,10 +77,18 @@ class App extends React.Component {
 		}
 	}
 
-	handleSubmit(user) {
+	handleLogin(user) {
 		console.log("Getting user: ", user);
-		fetch(`/api/${user}`)
-			.then(response => response.json())
+		axios
+			.get(`/user/?user=${user}`)
+			.then(data => {
+				this.setState({
+					hasData: true,
+					username: user,
+					data: data.data,
+				});
+				console.log(data, "thisis data");
+			})
 			.catch(err => {
 				console.log(err);
 			});
@@ -88,12 +98,17 @@ class App extends React.Component {
 		return (
 			<div>
 				<div id="topbar">
-					<Login handleSubmit={user => this.handleSubmit(user)} />
+					{this.state.hasData ? (
+						<p>Welcome ${this.state.username}</p>
+					) : (
+						<Login handleSubmit={user => this.handleLogin(user)} />
+					)}
 					<Signup />
 					<Input
 						onChange={(category, value) =>
 							this.handleNewTodo(category, value)
 						}
+						user={this.state.username}
 					/>
 				</div>
 				<Table
@@ -101,12 +116,7 @@ class App extends React.Component {
 					mind={this.state.mind}
 					spirit={this.state.spirit}
 				/>
-				{this.state.isLoading ? (
-					<p>Loading</p>
-				) : (
-					//TODO: We can do our today conditionals here.
-					<History data={this.state.data} />
-				)}
+				<History data={this.state.data} />
 			</div>
 		);
 	}

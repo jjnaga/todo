@@ -28,6 +28,7 @@ class Input extends React.Component {
 				todo: this.state.todo,
 				category: this.state.category,
 				value: parseInt(this.state.value),
+				user: this.props.user,
 			})
 			.then(res => {
 				this.props.onChange(res, this.state.value);

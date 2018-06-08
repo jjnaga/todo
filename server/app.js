@@ -5,6 +5,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import mongodb from "mongodb";
+import uuid from "uuid";
 
 // Create app
 const app = express();
@@ -44,18 +45,31 @@ function handleError(res, reason, message, code) {
  * 	GET: This is just the default login.
  * 	POST: Create new user
  */
-app.get("/user", (req, res) => {});
+app.get("/user", (req, res) => {
+	const { user } = req.query;
+	console.log(`Getting User: ${user}`);
+	db.collection("data")
+		.find({ user })
+		.toArray((err, data) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(data);
+				res.status(201).json(data);
+			}
+		});
+});
 
 app.post("/user", (req, res) => {
 	console.log("Creating New User: ", req.body);
 	const newTodo = req.body;
 	newTodo.createDate = new Date().toLocaleString();
-
 	db.collection("users").insertOne(newTodo, (err, doc) => {
 		if (err) {
 			handleError(res, err.message, "Failed to create Todo");
 		} else {
 			res.status(201).json(doc.ops[0]);
+			console.log("Succesful:", newTodo);
 		}
 	});
 });
@@ -72,19 +86,6 @@ app.get("/app", (req, res) => {
 	res.sendFile(path.join(__dirname, "..", "index.html"));
 });
 
-app.get("/api/today", (req, res) => {
-	// TODO: Get this to only return today's todos
-	db.collection("data")
-		.find({})
-		.toArray((err, data) => {
-			if (err) {
-				handleError(res, err.message, "Didn't get DB data");
-			} else {
-				res.status(200).json(data);
-			}
-		});
-});
-
 app.post("/api", (req, res) => {
 	console.log("app.js/API - Posting to API ", req.body);
 	const newTodo = req.body;
@@ -97,4 +98,17 @@ app.post("/api", (req, res) => {
 			res.status(201).json(doc.ops[0]);
 		}
 	});
+});
+
+app.get("/api/today", (req, res) => {
+	// TODO: Get this to only return today's todos
+	db.collection("data")
+		.find({})
+		.toArray((err, data) => {
+			if (err) {
+				handleError(res, err.message, "Didn't get DB data");
+			} else {
+				res.status(200).json(data);
+			}
+		});
 });
