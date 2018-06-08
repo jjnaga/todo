@@ -14,7 +14,7 @@ class App extends React.Component {
 		this.state = {
 			data: {},
 			body: 0,
-			mind: 2,
+			mind: 0,
 			spirit: 0,
 			bliss: 0,
 			hasData: false,
@@ -77,6 +77,36 @@ class App extends React.Component {
 		}
 	}
 
+	addBlissLevels() {
+		let body = 0;
+		let mind = 0;
+		let spirit = 0;
+
+		this.state.data.forEach(data => {
+			console.log(data);
+			const { value } = data;
+			switch (data.category) {
+				case 0:
+					body += value;
+					break;
+				case 1:
+					mind += value;
+					break;
+				case 2:
+					spirit += value;
+					break;
+				default:
+					break;
+			}
+		});
+
+		this.setState({
+			body,
+			mind,
+			spirit,
+		});
+	}
+
 	handleLogin(user) {
 		console.log("Getting user: ", user);
 		axios
@@ -88,6 +118,7 @@ class App extends React.Component {
 					data: data.data,
 				});
 				console.log(data, "thisis data");
+				this.addBlissLevels();
 			})
 			.catch(err => {
 				console.log(err);
