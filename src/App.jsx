@@ -125,12 +125,30 @@ class App extends React.Component {
 			});
 	}
 
+	logout() {
+		this.setState({
+			data: {},
+			body: 0,
+			mind: 0,
+			spirit: 0,
+			bliss: 0,
+			hasData: false,
+			username: "",
+		});
+	}
+
 	render() {
 		return (
 			<div>
 				<div id="topbar">
 					{this.state.hasData ? (
-						<p>Welcome ${this.state.username}</p>
+						<div>
+							<p>Welcome ${this.state.username}</p>
+							<button
+								name="Logout"
+								onClick={() => this.logout()}
+							/>
+						</div>
 					) : (
 						<Login handleSubmit={user => this.handleLogin(user)} />
 					)}
