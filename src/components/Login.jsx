@@ -1,5 +1,6 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 const style = {
 	float: "right",
@@ -10,42 +11,37 @@ class Login extends React.Component {
 		super(props);
 		this.state = {
 			user: "",
-			// For now, just username
-			// pass: "",
 		};
 		this.handleUserChange = this.handleUserChange.bind(this);
-		this.handlePassChange = this.handlePassChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	handleUserChange(e) {
 		this.setState({ user: e.target.value });
 	}
-	handlePassChange(e) {
-		this.setState({ pass: e.target.value });
-	}
-	handleSubmit(e) {
+
+	handleLogin(e) {
 		e.preventDefault();
-		this.props.handleSubmit(this.state.user);
+		axios
+			.get(`/user/?user=${this.state.user}`)
+			.then(data => {
+				this.props.login(data.data);
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	render() {
 		return (
 			<div style={style}>
-				<form onSubmit={e => this.handleSubmit(e)}>
+				<form onSubmit={e => this.handleLogin(e)}>
 					<input
 						type="text"
 						placeholder="Username"
 						value={this.state.user}
 						onChange={this.handleUserChange}
 					/>
-					{/* Lets do password way later */}
-					{/* <input
-						type="text"
-						placeholder="Password"
-						value={this.state.pass}
-						onChange={this.handlePassChange}
-					/> */}
 					<input type="submit" value="Submit" />
 				</form>
 			</div>
@@ -53,9 +49,8 @@ class Login extends React.Component {
 	}
 }
 
-// eslint-disable-next-line react/no-typos
-Login.Proptypes = {
-	handleSubmit: Proptypes.func.isRequired,
+Login.propTypes = {
+	login: PropTypes.func.isRequired,
 };
 
 export default Login;
