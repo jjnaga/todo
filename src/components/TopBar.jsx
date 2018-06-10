@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Input from "./Input";
 import Login from "./Login";
 import Signup from "./Signup";
+
+const style = {
+	margin: "0px 0px 50px 0px",
+	border: "5px solid red",
+};
 
 class TopBar extends Component {
 	constructor(props) {
@@ -28,7 +32,7 @@ class TopBar extends Component {
 
 	render() {
 		return (
-			<div>
+			<div style={style}>
 				{this.state.loggedIn ? (
 					<div>
 						<p>Welcome ${this.state.username}</p>

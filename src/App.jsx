@@ -5,11 +5,18 @@ import Main from "./components/Main";
 import History from "./components/History";
 import BottomBar from "./components/BottomBar";
 
+const style = {
+	background: "#DDDDDD",
+	minHeight: "100vh",
+	minWidth: "100vw",
+	position: "absolute",
+};
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: {},
+			data: [],
 		};
 
 		this.getData = this.getData.bind(this);
@@ -21,9 +28,9 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={style}>
 				<TopBar getData={this.getData} />
-				{/* <Main data={this.state.data}/> */}
+				<Main data={this.state.data} />
 				<History data={this.state.data} />
 				{/* <BottomBar /> */}
 			</div>
