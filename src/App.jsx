@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 // Components
 import TopBar from "./components/TopBar";
 import Main from "./components/Main";
@@ -17,20 +18,31 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			data: [],
+			username: "",
 		};
 
 		this.getData = this.getData.bind(this);
 	}
 
-	getData(data) {
-		this.setState({ data });
+	getData(username) {
+		axios
+			.get(`/user/?user=${username}`)
+			.then(data => {
+				this.setState({
+					data: data.data, // Data is value in Data object
+					username,
+				});
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	render() {
 		return (
 			<div style={style}>
 				<TopBar getData={this.getData} />
-				<Main data={this.state.data} />
+				<Main data={this.state.data} username={this.state.username} />
 				<History data={this.state.data} />
 				{/* <BottomBar /> */}
 			</div>

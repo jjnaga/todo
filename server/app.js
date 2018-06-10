@@ -42,7 +42,7 @@ function handleError(res, reason, message, code) {
 
 /**
  * user/
- * 	GET: This is just the default login.
+ * 	GET: Retrieves Todos for current day.
  * 	POST: Create new user
  */
 app.get("/user", (req, res) => {
@@ -60,10 +60,14 @@ app.get("/user", (req, res) => {
 		});
 });
 
+/**
+ * For when we need to get all the files.
+ */
+app.get("/user/all");
+
 app.post("/user", (req, res) => {
 	console.log("Creating New User: ", req.body);
 	const newTodo = req.body;
-	newTodo.createDate = new Date().toLocaleString();
 	db.collection("users").insertOne(newTodo, (err, doc) => {
 		if (err) {
 			handleError(res, err.message, "Failed to create Todo");

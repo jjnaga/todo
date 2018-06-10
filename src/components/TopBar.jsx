@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Login from "./Login";
 import Signup from "./Signup";
+import FullHistory from "./FullHistory";
 
 const style = {
 	margin: "0px 0px 50px 0px",
@@ -19,8 +20,8 @@ class TopBar extends Component {
 		this.logout = this.logout.bind(this);
 	}
 
-	login(data) {
-		this.props.getData(data);
+	login(username) {
+		this.props.getData(username);
 		this.setState({
 			loggedIn: true,
 		});
@@ -39,9 +40,10 @@ class TopBar extends Component {
 						<button name="Logout" onClick={this.logout} />
 					</div>
 				) : (
-					<Login login={data => this.login(data)} />
+					<Login login={this.login} />
 				)}
 				<Signup />
+				<FullHistory />
 			</div>
 		);
 	}

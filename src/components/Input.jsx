@@ -21,6 +21,7 @@ class Input extends React.Component {
 		// // TODO: What does this do anyway?
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		axios
@@ -30,8 +31,7 @@ class Input extends React.Component {
 				value: parseInt(this.state.value),
 				user: this.props.user,
 			})
-			.then(res => {
-				this.props.onChange(res, this.state.value);
+			.then(() => {
 				this.setState({
 					todo: "",
 					category: 0,
@@ -42,6 +42,7 @@ class Input extends React.Component {
 				console.log(err);
 			});
 	}
+
 	handleChange(e) {
 		this.setState({
 			todo: e.target.value,
@@ -92,5 +93,12 @@ class Input extends React.Component {
 	}
 }
 
-Input.propTypes = {};
+Input.propTypes = {
+	user: PropTypes.string,
+};
+
+Input.defaultProps = {
+	user: "",
+};
+
 export default Input;

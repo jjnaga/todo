@@ -10,26 +10,19 @@ class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user: "",
+			username: "",
 		};
-		this.handleUserChange = this.handleUserChange.bind(this);
+		this.handleusernameChange = this.handleusernameChange.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 	}
 
-	handleUserChange(e) {
-		this.setState({ user: e.target.value });
+	handleusernameChange(e) {
+		this.setState({ username: e.target.value });
 	}
 
 	handleLogin(e) {
 		e.preventDefault();
-		axios
-			.get(`/user/?user=${this.state.user}`)
-			.then(data => {
-				this.props.login(data.data);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		this.props.login(this.state.username);
 	}
 
 	render() {
@@ -38,9 +31,9 @@ class Login extends React.Component {
 				<form onSubmit={e => this.handleLogin(e)}>
 					<input
 						type="text"
-						placeholder="Username"
-						value={this.state.user}
-						onChange={this.handleUserChange}
+						placeholder="Login"
+						value={this.state.username}
+						onChange={this.handleusernameChange}
 					/>
 					<input type="submit" value="Submit" />
 				</form>

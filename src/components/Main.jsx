@@ -53,12 +53,7 @@ class Main extends Component {
 					mind={this.state.mind}
 					spirit={this.state.spirit}
 				/>
-				<Input
-					onChange={(category, value) =>
-						this.handleNewTodo(category, value)
-					}
-					user={this.state.username}
-				/>
+				<Input user={this.props.username} />
 			</div>
 		);
 	}
@@ -73,7 +68,13 @@ Main.propTypes = {
 			user: PropTypes.string,
 			value: PropTypes.number.isRequired,
 		}),
-	).isRequired,
+	),
+	username: PropTypes.string,
+};
+
+Main.defaultProps = {
+	data: [],
+	username: "",
 };
 
 export default Main;
