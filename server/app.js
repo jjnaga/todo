@@ -1,11 +1,31 @@
-// 5/26/18: Node currently does not support ES6. Babel required.
-// Used https://goo.gl/zgQtGV to learn all this.
-// https://goo.gl/oWXwto: Useful for learning fetch()
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import mongodb from "mongodb";
-import uuid from "uuid";
+/**
+ *
+ * 5/26/18: Node currently does not support ES6. Babel required.
+ * Used https://goo.gl/zgQtGV to learn all this.
+ * https://goo.gl/oWXwto: Useful for learning fetch()
+ *
+ *
+ * "/"
+ *	GET: Homepage
+ *
+ * "/user"
+ * 	GET: Gets user data for current day.
+ * 		Query:
+ * 			user: user's username.
+ * 			all: Returns all of the user's data.
+ * 	POST: Posts users Todo to DB.
+ * 		Query:
+ * 			user: user's username.
+ *
+ *
+ *
+ *
+ *
+ */
 
 // Create app
 const app = express();
@@ -39,6 +59,35 @@ function handleError(res, reason, message, code) {
 	console.log(`ERROR: ${reason}`);
 	res.status(code || 500).json({ error: message });
 }
+
+app.get("/", (req, res) => {
+	const { user } = req.query;
+	console.log(`Getting User: ${user}`);
+
+	const query = {
+		user: "Jeremy",
+	};
+	border: "5px solid red",
+
+	const cursor = db.collection("data").find(query);
+	const today = [];
+	cursor.forEach(data => {
+		const time = Math.floor(Date.now() / 1000);
+		const timestamp = parseInt(data._id.toString().substring(0, 8), 16);
+		console.log(`${time - timestamp}`);
+
+		// First num (1) indicates days, 24 = hour, 60 = min, 60 = sec
+		if (time - timestamp < 1 * 24 * 60 * 60) {
+			console.log("yay");
+			console.log(typeof data);
+			today.push(data);
+			console.log(today);
+		}
+	});
+
+	console.log(`loop finished: ${today}`);
+	res.status(201).json(today);
+});
 
 /**
  * user/

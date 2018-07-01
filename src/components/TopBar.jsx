@@ -6,7 +6,18 @@ import FullHistory from "./FullHistory";
 
 const style = {
 	margin: "0px 0px 50px 0px",
-	border: "5px solid red",
+	background: "black",
+	overflow: "auto",
+};
+
+const Logo = {
+	float: "left",
+	color: "white",
+	fontSize: "60px",
+};
+
+const rightSide = {
+	float: "right",
 };
 
 class TopBar extends Component {
@@ -34,16 +45,19 @@ class TopBar extends Component {
 	render() {
 		return (
 			<div style={style}>
-				{this.state.loggedIn ? (
-					<div>
-						<p>Welcome ${this.state.username}</p>
-						<button name="Logout" onClick={this.logout} />
-					</div>
-				) : (
-					<Login login={this.login} />
-				)}
-				<Signup />
-				<FullHistory />
+				<p style={Logo}>Bliss</p>
+				<div style={rightSide}>
+					{this.state.loggedIn ? (
+						<div>
+							<p>Welcome ${this.state.username}</p>
+							<button name="Logout" onClick={this.logout} />
+						</div>
+					) : (
+						<Login login={this.login} />
+					)}
+					<Signup />
+					{/* <FullHistory /> */}
+				</div>
 			</div>
 		);
 	}

@@ -30,7 +30,6 @@ class Signup extends React.Component {
 	render() {
 		return (
 			<div>
-				<p>Enter Username</p>
 				<input
 					type="text"
 					placeholder="Signup Here!"
