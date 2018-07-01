@@ -4,7 +4,7 @@ import Table from "./Table";
 import Input from "./Input";
 
 const style = {
-	margin: "50px 0px 50px 0px",
+	margin: "0px 0px 50px 0px",
 	border: "5px solid red",
 };
 
@@ -53,7 +53,7 @@ class Main extends Component {
 					mind={this.state.mind}
 					spirit={this.state.spirit}
 				/>
-				<Input user={this.props.username} />
+				{/* <Input user={this.props.username} /> */}
 			</div>
 		);
 	}

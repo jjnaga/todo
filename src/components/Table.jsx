@@ -14,31 +14,48 @@ const parent = {
 };
 
 const circleStyle = {
+	float: "left",
 	height: "300px",
+};
+
+const bodyDiv = {
+	overflow: "auto",
+};
+const mindDiv = {
+	overflow: "auto",
+};
+const spiritDiv = {
+	overflow: "auto",
 };
 
 const Table = ({ body, mind, spirit }) => (
 	// Red: #ff0045
 	// Green: #00c11a
 	<div style={parent}>
-		<Circle
-			style={circleStyle}
-			percent={body * 10}
-			strokeWidth="2"
-			strokeColor={body * 10 < 100 ? "#ff0045" : "#00c11a"}
-		/>
-		<Circle
-			style={circleStyle}
-			percent={mind * 10}
-			strokeWidth="2"
-			strokeColor={mind * 10 < 100 ? "#ff0045" : "#00c11a"}
-		/>
-		<Circle
-			style={circleStyle}
-			percent={spirit * 10}
-			strokeWidth="2"
-			strokeColor={spirit * 10 < 100 ? "#ff0045" : "#00c11a"}
-		/>
+		<div style={bodyDiv}>
+			<Circle
+				style={circleStyle}
+				percent={body * 10}
+				strokeWidth="2"
+				strokeColor={body * 10 < 100 ? "#ff0045" : "#00c11a"}
+			/>
+		</div>
+		<div style={mindDiv}>
+			<Circle
+				style={circleStyle}
+				percent={mind * 10}
+				strokeWidth="2"
+				strokeColor={mind * 10 < 100 ? "#ff0045" : "#00c11a"}
+			/>
+		</div>
+		<div style={spiritDiv}>
+			<Circle
+				style={circleStyle}
+				percent={spirit * 10}
+				strokeWidth="2"
+				strokeColor={spirit * 10 < 100 ? "#ff0045" : "#00c11a"}
+			/>
+		</div>
 	</div>
 );
 

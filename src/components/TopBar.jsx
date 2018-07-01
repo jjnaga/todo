@@ -5,7 +5,7 @@ import Signup from "./Signup";
 import FullHistory from "./FullHistory";
 
 const style = {
-	margin: "0px 0px 50px 0px",
+	margin: "0px 0px 0px 0px",
 	background: "black",
 	overflow: "auto",
 };
